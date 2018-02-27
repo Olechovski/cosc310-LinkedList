@@ -51,74 +51,82 @@ public class LinkedItemList<E> implements ItemList<E> {
 
 
 	@Override
-	public void addItem(E item) {
-		
-		Node ptr = dummy.prev;
-		ptr.next = new Node(ptr, item, dummy);
-		dummy.prev = ptr.next;
-		
+	public void append(E item) {
+		appendAfter(item,dummy.prev);
+	}
+
+	@Override
+	public void insert(E item, int index) throws IllegalArgumentException {
+		// subtract 1 off index so that it will insert at the index rather than after
+		appendAfter(item, getNode(index-1));
+	}
+	
+	
+	/**
+	 * Responsible for creating a node and appending it to the list
+	 * used for insert and append method
+	 * 
+	 * @param item
+	 * @param node
+	 * 
+	 */
+	private void appendAfter(E item, Node node){
+		node.next =  new Node(node, item, node.next);
+		dummy.prev = node.next;
 		noItems++;
 	}
 
 	@Override
-	public void insertItem(E item, int index) throws IllegalArgumentException {
-		if (index == 0){
-			Node ptr = dummy.next;
-			dummy.next = new Node(dummy, item, dummy.next);
-			ptr.prev = dummy.next;
+	public E get(int index) {
+		if (index < 0){
+			throw new IndexOutOfBoundsException ();
 		}
-		
-		else{
-		Node ptr = getNode(index-1);
-		Node insert = ptr.next;
-		ptr.next = new Node(ptr, item, ptr.next);
-		insert.prev = ptr.next;
-		}
-		
-		noItems++;
-	}
-
-	@Override
-	public E getItem(int index) throws IllegalArgumentException {
 		Node ptr = getNode(index);
 		return ptr.data;
 	}
 
 	
 	@Override
-	public E removeItem(int index) throws IllegalArgumentException {
-		
+	public E remove(int index){
 		Node remove = getNode(index);
-		E data = remove.data;
-		Node ptr = remove.prev;
-		ptr.next = remove.next;
-		remove.next.prev = ptr;
+		remove.prev.next = remove.next;
+		remove.next.prev = remove.prev;
 		noItems--;
-		return data;
+		return remove.data;
 
 	}
 
 	/**
-	 * Returns the node at a given index in the list
+	 * Returns the node at a given index from the list
 	 * 
 	 * @param index
 	 * @return Node
 	 */
 	public Node getNode(int index){
 	
-		Node ptr = dummy.next;
-		int i = 0;
-		while (i != index ){
-			ptr = ptr.next;
-			i++;
+		if ( index >= noItems || index < -1){
+			throw new IndexOutOfBoundsException();
 		}
 		
+		Node ptr = dummy;
+		while (index > -1){
+			ptr = ptr.next;
+			index--;
+		}
 		return ptr;
-		
-	
 	}
 	
-	public int getNoItems (){
+	public boolean isEmpty(){
+		return noItems == 0;
+	}
+	
+	public void clear(){
+		dummy.next = dummy;
+		dummy.prev = dummy;
+		noItems = 0;
+	}
+	
+	public int size(){
 		return noItems;
 		
 	}

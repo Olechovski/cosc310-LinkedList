@@ -19,7 +19,7 @@ public class Company {
 	 * @param department - the company to be added
 	 */
 	public void addDepartment(Department department) {
-		departments.addItem(department);;
+		departments.append(department);;
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class Company {
 	 */
 	public Department findDepartment(String deptCode) {
 		for (int i = 0; i < getNoDepartments(); i++) {
-			Department department = departments.getItem(i);
+			Department department = departments.get(i);
 			if (deptCode.equals(department.getDeptCode())) {
 				return department;
 			}
@@ -47,7 +47,7 @@ public class Company {
 	 * @return number of departments
 	 */
 	public int getNoDepartments() {
-		return departments.getNoItems();
+		return departments.size();
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class Company {
 	 * @return the ith department in this company
 	 */
 	public Department getItem(int i) {
-		return departments.getItem(i);
+		return departments.get(i);
 	}
 
 	

@@ -16,7 +16,7 @@ public interface ItemList<E> {
 	 * Append an item to the end of the list
 	 * @param item - item to be appended
 	 */
-	public void addItem(E item);
+	public void append(E item);
 	
 	
 	
@@ -26,7 +26,7 @@ public interface ItemList<E> {
 	 * @param item - item to be inserted
 	 * @param index - index position where to insert the item
 	 */
-	public void insertItem(E item, int index);
+	public void insert(E item, int index);
 	
 	
 	/**
@@ -35,7 +35,7 @@ public interface ItemList<E> {
 	 * @param index - index of the item to return
 	 * @return the item at the specified index
 	 */
-	public E getItem(int index);
+	public E get(int index);
 	
 	
 	/**
@@ -44,13 +44,25 @@ public interface ItemList<E> {
 	 * @param index - index of the item to be removed
 	 * @return the removed item
 	 */
-	public E removeItem (int index);
+	public E remove(int index);
 	
 	/**
 	 * Return the number of items currently in the list
 	 * 
 	 * @return the number of items in the list
 	 */
-	public int getNoItems();
+	public int size();
+	
+	/**
+	 * Will clear the list
+	 */
+	public void clear();
+	
+	/**
+	 * Check to see if the list is empty
+	 * 
+	 * @return true if list is empty
+	 */
+	public boolean isEmpty();
 	
 }

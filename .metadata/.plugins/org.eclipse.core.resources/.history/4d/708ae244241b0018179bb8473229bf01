@@ -1,0 +1,22 @@
+package edu.iup.cosc310.util;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class JUnitTestLinkedItemList {
+
+	
+	ItemList<Integer> list = new LinkedItemList<Integer>();
+	
+	
+	@Test
+	public void testNoItems() {
+		
+		fail("Not yet implemented");
+	}
+	
+	
+	
+
+}
