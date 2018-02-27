@@ -1,0 +1,136 @@
+package edu.iup.cosc310.util;
+
+
+/**
+ * This class is used to implement the methods from
+ * the ItemList interface.
+ * 
+ * LinkedItemList is implemented as a doubly linked circular list that uses a 'dummy' node or a start note to reference
+ * the head and tail of the list.
+ * 
+ * 
+ * @author Eric Olechovski
+ *
+ * @param <E>
+ */
+public class LinkedItemList<E> implements ItemList<E> {
+	
+
+	private int noItems = 0;
+	private Node dummy = new Node (null, null, null);
+
+	
+	public LinkedItemList() {
+		super();
+		dummy.next = dummy;
+		dummy.prev = dummy;
+	}
+
+	/**
+	 * This class is used to create a circular
+	 * double linked list for the Item List
+	 * 
+	 * @author Eric Olechovski
+	 *
+	 */
+	public class Node {
+		private E data;
+		private Node next;
+		private Node prev;
+		
+		
+		public Node(LinkedItemList<E>.Node prev, E data, LinkedItemList<E>.Node next) {
+			super();
+			this.data = data;
+			this.next = next;
+			this.prev = prev;
+			
+		}
+	}
+	
+
+
+	@Override
+	public void addItem(E item) {
+		
+		Node ptr = dummy.prev;
+		ptr.next = new Node(ptr, item, dummy);
+		dummy.prev = ptr.next;
+		
+		noItems++;
+	}
+
+	@Override
+	public void insertItem(E item, int index) throws IllegalArgumentException {
+		if (index == 0){
+			Node ptr = dummy.next;
+			dummy.next = new Node(dummy, item, dummy.next);
+			ptr.prev = dummy.next;
+		}
+		
+		else{
+		Node ptr = getNode(index-1);
+		Node insert = ptr.next;
+		ptr.next = new Node(ptr, item, ptr.next);
+		insert.prev = ptr.next;
+		}
+		
+		noItems++;
+	}
+
+	@Override
+	public E getItem(int index) throws IllegalArgumentException {
+		Node ptr = getNode(index);
+		return ptr.data;
+	}
+
+	
+	@Override
+	public E removeItem(int index) throws IllegalArgumentException {
+		
+		Node remove = getNode(index);
+		E data = remove.data;
+		Node ptr = remove.prev;
+		ptr.next = remove.next;
+		remove.next.prev = ptr;
+		noItems--;
+		return data;
+
+	}
+
+	/**
+	 * Returns the node at a given index in the list
+	 * 
+	 * @param index
+	 * @return Node
+	 */
+	public Node getNode(int index){
+	
+		if ( index > noItems){
+			return null;
+		}
+		
+		
+		Node ptr = dummy.next;
+		while (index > 0){
+			ptr = ptr.next;
+			index--;
+		}
+		
+		return ptr;
+		
+	
+	}
+	
+	public void clear(){
+		dummy.next = dummy;
+		dummy.prev = dummy;
+		noItems = 0;
+	}
+	
+	public int getNoItems (){
+		return noItems;
+		
+	}
+
+}

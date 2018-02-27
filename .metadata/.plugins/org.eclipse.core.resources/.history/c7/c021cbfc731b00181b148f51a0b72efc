@@ -1,0 +1,121 @@
+package edu.iup.cosc310.util;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class JUnitTestLinkedItemList {
+
+	private ItemList<String> list = new LinkedItemList<String>();
+	
+	private void addThree() {
+		list.addItem("one");
+		list.addItem("two");
+		list.addItem("three");	
+	}
+	
+	// Workaround to have JUnit 5 like tests for exceptions
+	@FunctionalInterface
+	interface Runner {
+		public void run();
+	}
+	
+	public static Class catchException(Runner runner) {
+		try {
+			runner.run();
+			return null;
+		} catch (Exception e) {
+			return e.getClass();
+		}
+	}
+
+	
+
+	@Test
+	public void testNoItems() {
+		addThree();
+		assertEquals(3, list.getNoItems());
+		
+	}
+	
+	
+	@Test
+	public void testRemoveItem() {
+		assertNull(list.removeItem(0));
+		
+
+		
+		assertEquals(4, list.getNoItems());
+		
+		assertSame(list.getItem(2), list.removeItem(2));
+		assertEquals(3, list.getNoItems());
+		assertSame(list.getItem(2), list.removeItem(2));
+		assertEquals(2, list.getNoItems());
+		
+		//System.out.println(list.removeItem(5));
+		
+	}
+	
+	@Test
+	public void testInsertItem() {
+		fail("Not yet implemented");
+		
+	}
+	
+	@Test
+	public void testGetItem() {
+		fail("Not yet implemented");
+		
+	}
+	
+	@Test
+	public void testAddItem() {
+		fail("Not yet implemented");
+		
+	}
+	
+	/******** Insert test  ********/
+	@Test
+	public void testInsertAtBeginning() {
+		fail("Not yet implemented");
+		
+	}
+	
+	@Test
+	public void testInsertAtMiddle() {
+		fail("Not yet implemented");
+		
+	}
+	
+	@Test
+	public void testInsertAtEnd() {
+		fail("Not yet implemented");
+		
+	}
+	
+	/*********************************************/
+	
+	
+	/******** Remove test  ********/
+	@Test
+	public void testRemoveFromBeginning() {
+		fail("Not yet implemented");
+		
+	}
+	
+	@Test
+	public void testRemoveFromMiddle() {
+		fail("Not yet implemented");
+		
+	}
+	
+	@Test
+	public void testRemoveFromEnd() {
+		fail("Not yet implemented");
+		
+	}
+	
+	/*********************************************/
+	
+
+}

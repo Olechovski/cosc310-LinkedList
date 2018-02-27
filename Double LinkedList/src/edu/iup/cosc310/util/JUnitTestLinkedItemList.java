@@ -1,0 +1,169 @@
+package edu.iup.cosc310.util;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+/**
+ * JUnit testing class is responsible for testing the implemented methods for the ItemList interface
+ * 
+ * @author Eric Olechovski
+ *
+ */
+public class JUnitTestLinkedItemList {
+
+	private ItemList<String> list = new LinkedItemList<String>();
+
+	private void addThree() {
+		list.append("one");
+		list.append("two");
+		list.append("three");	
+	}
+
+	// Workaround to have JUnit 5 like tests for exceptions
+	@FunctionalInterface
+	interface Runner {
+		public void run();
+	}
+
+	public static Class catchException(Runner runner) {
+		try {
+			runner.run();
+			return null;
+		} catch (Exception e) {
+			return e.getClass();
+		}
+	}
+
+
+	@Test
+	public void testNoItems() {
+
+		assertTrue(list.isEmpty());
+		addThree();
+		assertEquals(3, list.size());
+		assertFalse(list.isEmpty());
+
+		list.clear();
+		assertEquals(0, list.size());
+		assertTrue(list.isEmpty());
+
+	}
+
+
+	@Test
+	public void testNewEmptyList() {
+		assertEquals(0, list.size());
+		assertTrue(list.isEmpty());
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(0); }));
+
+	}
+
+	@Test
+	public void testAddingOne() {
+		list.append("one");
+		assertEquals(1, list.size());
+		assertFalse(list.isEmpty());
+		assertEquals("one", list.get(0));
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(1); }));
+	}
+
+	@Test
+	public void testAddingThree() {
+		addThree();
+		assertEquals(3, list.size());
+		assertFalse(list.isEmpty());
+		assertEquals("one", list.get(0));
+		assertEquals("two", list.get(1));
+		assertEquals("three", list.get(2));
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(3); }));
+	}
+
+	@Test
+	public void testInsertAtFront() {
+		addThree();
+		list.insert("zero", 0);
+		assertEquals(list.size(), 4);
+		assertEquals(list.isEmpty(), false);
+		assertEquals(list.get(0),"zero" );
+		assertEquals(list.get(1),"one" );
+		assertEquals(list.get(2),"two" );
+		assertEquals(list.get(3),"three" );
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(4); }));	
+	}
+
+	@Test
+	public void testInsertAtMiddle() {
+		addThree();
+		list.insert("two & a half", 2);
+		assertEquals(4, list.size());
+		assertFalse(list.isEmpty());
+		assertEquals("one", list.get(0));
+		assertEquals("two", list.get(1));
+		assertEquals("two & a half", list.get(2));
+		assertEquals("three", list.get(3));
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(4); }));
+	}
+
+	@Test
+	public void testInsertAtEnd() {
+		addThree();
+		list.insert("four", 3);
+		assertEquals(4, list.size());
+		assertFalse(list.isEmpty());
+		assertEquals("one", list.get(0));
+		assertEquals("two", list.get(1));
+		assertEquals("three", list.get(2));
+		assertEquals("four", list.get(3));	
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(4); }));
+	}	
+
+	@Test
+	public void testRemoveAtFront() {
+		addThree();
+		list.remove(0);
+		assertEquals(2, list.size());
+		assertFalse(list.isEmpty());
+		assertEquals("two", list.get(0));
+		assertEquals("three", list.get(1));		
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(2); }));
+	}
+
+
+	@Test
+	public void testRemoveAtMiddle() {
+		addThree();
+		list.remove(1);
+		assertEquals(2, list.size());
+		assertFalse(list.isEmpty());
+		assertEquals("one", list.get(0));
+		assertEquals("three", list.get(1));		
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(2); }));
+	}
+
+	@Test
+	public void testRemoveAtEnd() {
+		addThree();
+		list.remove(2);
+		assertEquals(2, list.size());
+		assertFalse(list.isEmpty());
+		assertEquals("one", list.get(0));
+		assertEquals("two", list.get(1));		
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
+		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(2); }));
+	}
+
+
+
+
+
+
+}

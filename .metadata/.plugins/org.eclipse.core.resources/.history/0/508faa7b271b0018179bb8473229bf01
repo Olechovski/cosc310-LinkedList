@@ -1,0 +1,59 @@
+package edu.iup.cosc310.util;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class JUnitTestLinkedItemList {
+
+	
+
+	@Test
+	public void testNoItems() {
+		ItemList<Integer> list = new LinkedItemList<Integer>();
+		assertEquals(0, list.getNoItems());
+		list.addItem(1);
+		assertEquals(1, list.getNoItems());
+		list.addItem(22);
+		assertEquals(2, list.getNoItems());
+		
+	}
+	
+	
+	@Test
+	public void testRemoveItem() {
+		ItemList<Integer> list = new LinkedItemList<Integer>();
+		
+		list.addItem(1);
+		list.addItem(22);
+		list.addItem(333);
+		list.addItem(4444);
+		
+		assertEquals(4, list.getNoItems());
+		assertSame("This is the value that should be returned", 333, list.removeItem(2));
+//		assertEquals(3, list.getNoItems());
+//		assertSame(4444, list.removeItem(2));
+//		assertEquals(2, list.getNoItems());
+		
+	}
+	
+	@Test
+	public void testInsertItem() {
+		fail("Not yet implemented");
+		
+	}
+	
+	@Test
+	public void testGetItem() {
+		fail("Not yet implemented");
+		
+	}
+	
+	@Test
+	public void testAddItem() {
+		fail("Not yet implemented");
+		
+	}
+	
+
+}
