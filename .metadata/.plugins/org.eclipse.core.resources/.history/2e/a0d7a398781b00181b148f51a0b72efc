@@ -13,19 +13,19 @@ import org.junit.Test;
 public class JUnitTestLinkedItemList {
 
 	private ItemList<String> list = new LinkedItemList<String>();
-
+	
 	private void addThree() {
 		list.append("one");
 		list.append("two");
 		list.append("three");	
 	}
-
+	
 	// Workaround to have JUnit 5 like tests for exceptions
 	@FunctionalInterface
 	interface Runner {
 		public void run();
 	}
-
+	
 	public static Class catchException(Runner runner) {
 		try {
 			runner.run();
@@ -38,28 +38,30 @@ public class JUnitTestLinkedItemList {
 
 	@Test
 	public void testNoItems() {
-
+		
 		assertTrue(list.isEmpty());
 		addThree();
 		assertEquals(3, list.size());
 		assertFalse(list.isEmpty());
-
+		
 		list.clear();
 		assertEquals(0, list.size());
 		assertTrue(list.isEmpty());
-
+		
 	}
-
-
+	
+	
 	@Test
 	public void testNewEmptyList() {
 		assertEquals(0, list.size());
 		assertTrue(list.isEmpty());
 		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
 		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(0); }));
-
+		
 	}
+	
 
+	
 	@Test
 	public void testAddingOne() {
 		list.append("one");
@@ -69,7 +71,7 @@ public class JUnitTestLinkedItemList {
 		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
 		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(1); }));
 	}
-
+	
 	@Test
 	public void testAddingThree() {
 		addThree();
@@ -81,7 +83,7 @@ public class JUnitTestLinkedItemList {
 		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
 		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(3); }));
 	}
-
+	
 	@Test
 	public void testInsertAtFront() {
 		addThree();
@@ -95,7 +97,7 @@ public class JUnitTestLinkedItemList {
 		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
 		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(4); }));	
 	}
-
+	
 	@Test
 	public void testInsertAtMiddle() {
 		addThree();
@@ -109,7 +111,7 @@ public class JUnitTestLinkedItemList {
 		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
 		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(4); }));
 	}
-
+	
 	@Test
 	public void testInsertAtEnd() {
 		addThree();
@@ -135,8 +137,8 @@ public class JUnitTestLinkedItemList {
 		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
 		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(2); }));
 	}
-
-
+	
+	
 	@Test
 	public void testRemoveAtMiddle() {
 		addThree();
@@ -148,7 +150,7 @@ public class JUnitTestLinkedItemList {
 		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(-1); }));
 		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(2); }));
 	}
-
+	
 	@Test
 	public void testRemoveAtEnd() {
 		addThree();
@@ -161,9 +163,9 @@ public class JUnitTestLinkedItemList {
 		assertEquals(IndexOutOfBoundsException.class, catchException(()-> { list.get(2); }));
 	}
 
+	
 
 
-
-
+	
 
 }
